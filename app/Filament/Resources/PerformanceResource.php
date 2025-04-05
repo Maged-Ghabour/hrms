@@ -20,36 +20,53 @@ class PerformanceResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-lightning-bolt';
 
-    protected static ?string $navigationGroup = 'Employees';
+    protected static ?string $navigationGroup = 'الموظفين';
+
+
+
+
+    protected static ?string $navigationLabel = 'الأداء';
+    protected static ?string $title = 'الأداء';
+    protected static ?string $label = 'أداء';
+    protected static ?string $pluralLabel = 'الأداء';
+
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Select::make('employee_id')
-                    ->label('Employee')
+                    ->label('الموظف')
+                    ->placeholder('اختر الموظف')
                     ->options(Employee::all()->pluck('full_name', 'id'))
                     ->required(),
                 Forms\Components\Select::make('year')
+                    ->placeholder('اختر السنة')
+                    ->default(now()->year)
+                    ->label('السنة')
                     ->options(array_combine(range(date("Y"), 2010), range(date("Y"), 2010)))
                     ->required(),
                 Forms\Components\Select::make('month')
+                    ->label('الشهر')
+                    ->placeholder('اختر الشهر')
                     ->options([
-                        'january' => 'January',
-                        'february' => 'February',
-                        'march' => 'March',
-                        'april' => 'April',
-                        'may' => 'May',
-                        'june' => 'June',
-                        'july' => 'July',
-                        'august' => 'August',
-                        'september' => 'September',
-                        'october' => 'October',
-                        'november' => 'November',
-                        'december' => 'December',
+                        'january' => 'يناير',
+                        'february' => 'فبراير',
+                        'march' => 'مارس',
+                        'april' => 'إبريل',
+                        'may' => 'مايو',
+                        'june' => 'يونيو',
+                        'july' => 'يوليو',
+                        'august' => 'أغسطس',
+                        'september' => 'سبتمبر',
+                        'october' => 'أكتوبر',
+                        'november' => 'نوفمبر',
+                        'december' => 'ديسمبر',
                     ])
                     ->required(),
                 Forms\Components\Select::make('ratings')
+                    ->label('التقييم')
+                    ->placeholder('اختر التقييم')
                     ->options([
                         1 => 1,
                         2 => 2,
@@ -70,17 +87,21 @@ class PerformanceResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('employee.full_name')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('employee.full_name')->searchable()->sortable()
+                    ->label('الموظف'),
                 Tables\Columns\TextColumn::make('year')
-                    ->date(),
-                Tables\Columns\TextColumn::make('month'),
-                Tables\Columns\TextColumn::make('ratings'),
+                    ->label('السنة'),
+                Tables\Columns\TextColumn::make('month')
+                    ->label('الشهر'),
+                Tables\Columns\TextColumn::make('ratings')
+                    ->label('التقييم'),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('تاريخ الإنشاء')
                     ->dateTime(),
             ])
             ->pushBulkActions([
                 BulkAction::make('export')
-                    ->action(fn (Collection $records) => redirect(route('performance.download')))
+                    ->action(fn(Collection $records) => redirect(route('performance.download')))
                     ->icon('heroicon-o-document-download')
                     ->label('Export Data')
             ])

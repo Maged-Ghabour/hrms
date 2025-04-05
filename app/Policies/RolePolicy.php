@@ -17,8 +17,8 @@ class RolePolicy
      */
     public function viewAny(User $user)
     {
-        // return $user->can('view_any_role');
-        return true;
+        return $user->can('view_any_role');
+        // return true;
     }
 
     /**
@@ -29,8 +29,8 @@ class RolePolicy
      */
     public function view(User $user)
     {
-        // return $user->can('view_role');
-        return true;
+        return $user->can('view_role');
+        // return true;
     }
 
     /**
@@ -41,8 +41,8 @@ class RolePolicy
      */
     public function create(User $user)
     {
-        // return $user->can('create_role');
-        return true;
+        return $user->can('create_role');
+        // return true;
     }
 
     /**
@@ -53,8 +53,8 @@ class RolePolicy
      */
     public function update(User $user)
     {
-        // return $user->can('update_role');
-        return true;
+        return $user->can('update_role');
+        // return true;
     }
 
     /**
@@ -65,8 +65,8 @@ class RolePolicy
      */
     public function delete(User $user)
     {
-        // return $user->can('delete_role');
-        return true;
+        return $user->can('delete_role');
+        // return true;
     }
 
     /**
@@ -77,7 +77,7 @@ class RolePolicy
      */
     public function deleteAny(User $user)
     {
-        // return $user->can('delete_any_role');
-        return true;
+        return $user->can('delete_any_role');
+        // return true;
     }
 }

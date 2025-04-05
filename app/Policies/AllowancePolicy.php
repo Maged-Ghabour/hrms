@@ -17,8 +17,7 @@ class AllowancePolicy
      */
     public function viewAny(User $user)
     {
-        // return $user->can('view_any_allowance');
-        return true;
+        return $user->can('view_any_allowance');
     }
 
     /**
@@ -29,8 +28,7 @@ class AllowancePolicy
      */
     public function view(User $user)
     {
-        // return $user->can('view_allowance');
-        return true;
+        return $user->can('view_allowance');
     }
 
     /**
@@ -41,8 +39,7 @@ class AllowancePolicy
      */
     public function create(User $user)
     {
-        // return $user->can('create_allowance');
-        return true;
+        return $user->can('create_allowance');
     }
 
     /**
@@ -53,8 +50,7 @@ class AllowancePolicy
      */
     public function update(User $user)
     {
-        // return $user->can('update_allowance');
-        return true;
+        return $user->can('update_allowance');
     }
 
     /**
@@ -65,8 +61,7 @@ class AllowancePolicy
      */
     public function delete(User $user)
     {
-        // return $user->can('delete_allowance');
-        return true;
+        return $user->can('delete_allowance');
     }
 
     /**
@@ -77,7 +72,6 @@ class AllowancePolicy
      */
     public function deleteAny(User $user)
     {
-        // return $user->can('delete_any_allowance');
-        return true;
+        return $user->can('delete_any_allowance');
     }
 }

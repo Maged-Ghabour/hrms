@@ -17,8 +17,8 @@ class EmployeePolicy
      */
     public function viewAny(User $user)
     {
-        // return $user->can('view_any_employee');
-        return true;
+        return $user->can('view_any_employee');
+        // return true;
     }
 
     /**
@@ -29,8 +29,8 @@ class EmployeePolicy
      */
     public function view(User $user)
     {
-        // return $user->can('view_employee');
-        return true;
+        return $user->can('view_employee');
+        // return true;
     }
 
     /**
@@ -41,8 +41,8 @@ class EmployeePolicy
      */
     public function create(User $user)
     {
-        // return $user->can('create_employee');
-        return true;
+        return $user->can('create_employee');
+        // return true;
     }
 
     /**
@@ -53,8 +53,8 @@ class EmployeePolicy
      */
     public function update(User $user)
     {
-        // return $user->can('update_employee');
-        return true;
+        return $user->can('update_employee');
+        // return true;
     }
 
     /**
@@ -65,8 +65,8 @@ class EmployeePolicy
      */
     public function delete(User $user)
     {
-        // return $user->can('delete_employee');
-        return true;
+        return $user->can('delete_employee');
+        // return true;
     }
 
     /**
@@ -77,7 +77,7 @@ class EmployeePolicy
      */
     public function deleteAny(User $user)
     {
-        // return $user->can('delete_any_employee');
-        return true;
+        return $user->can('delete_any_employee');
+        // return true;
     }
 }

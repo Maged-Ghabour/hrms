@@ -23,80 +23,106 @@ class EmployeeResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
-    protected static ?string $navigationGroup = 'Employees';
+    protected static ?string $navigationGroup = 'الموظفين';
+
+
+
+
+    protected static ?string $navigationLabel = 'الموظفين';
+    protected static ?string $title = 'الموظفين';
+    protected static ?string $label = ' موظف';
+    protected static ?string $pluralLabel = ' الموظفين';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                SpatieMediaLibraryFileUpload::make('avatar')->collection('avatars')->columns(1),
+                SpatieMediaLibraryFileUpload::make('avatar')->collection('avatars')->columns(1)->label('صورة شخصية'),
                 Forms\Components\TextInput::make('first_name')
+                    ->label('الاسم الأول')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('middle_name')
+                    ->label('اسم الأب')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('last_name')
+                    ->label('اسم العائلة')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\DatePicker::make('dob')
+                    ->label('تاريخ الميلاد')
                     ->default(now()->subYears(18))
                     ->withoutTime()
                     ->required(),
                 Forms\Components\Select::make('gender')
+                    ->label('الجنس')
+                    ->placeholder('اختر الجنس')
                     ->required()
                     ->options([
-                        'male' => 'Male',
-                        'female' => 'Female',
+                        'male' => 'ذكر',
+                        'female' => 'انثي',
                     ]),
                 Forms\Components\TextInput::make('phone_1')
+                    ->label('رقم الهاتف')
                     ->tel()
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('phone_2')
+                    ->label('رقم الهاتف الثاني')
                     ->tel()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('current_address')
+                    ->label('العنوان الحالي')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('permanent_address')
+                    ->label('العنوان الدائم')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Select::make('nationality')
+                    ->label('الجنسية')
                     ->required()
                     ->options([
-                        'tanzanian' => 'Tanzanian',
-                        'kenyan' => 'Kenyan',
-                        'uganda' => 'Uganda',
+                        'egy' => 'مصري',
                     ]),
                 Forms\Components\TextInput::make('reference_name_1')
+                    ->label('اسم المرجع الأول')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('reference_phone_1')
+                    ->label('رقم هاتف المرجع الأول')
                     ->tel()
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('reference_name_2')
+                    ->label('اسم المرجع الثاني')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('reference_phone_2')
+                    ->label('رقم هاتف المرجع الثاني')
                     ->tel()
                     ->maxLength(255),
                 Forms\Components\Select::make('marital_status')
+                    ->label('الحالة الاجتماعية')
+                    ->placeholder('اختر الحالة الاجتماعية')
                     ->required()
                     ->options([
-                        'married' => 'Married',
-                        'single' => 'Single'
+                        'married' => 'متزوج',
+                        'single' => 'عازب'
                     ]),
                 Forms\Components\Textarea::make('comment')
+                    ->label('ملاحظات')
                     ->required()
                     ->maxLength(65535),
                 SpatieMediaLibraryFileUpload::make('Documents')
+                    ->label('مستندات الموظف')
                     ->collection('employee-documents')
                     ->multiple()
                     ->minFiles(1)
                     ->maxFiles(5),
                 Forms\Components\Select::make('user_id')
-                    ->label('user account')
+                    ->label('المستخدم')
+                    ->placeholder('اختر المستخدم')
                     ->required()
                     ->options(User::all()->pluck('name', 'id')),
             ]);
@@ -108,17 +134,19 @@ class EmployeeResource extends Resource
             ->columns([
                 SpatieMediaLibraryImageColumn::make('avatar')
                     ->collection('avatars')
+                    ->label('صورة شخصية')
                     ->conversion('thumb')->rounded(),
                 Tables\Columns\TextColumn::make('full_name')
+                    ->label('الاسم الكامل')
                     ->searchable(['first_name', 'last_name'])
-                    ->sortable()
-                ,
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('dob')
+                    ->label('تاريخ الميلاد')
                     ->date(),
-                Tables\Columns\TextColumn::make('gender'),
-                Tables\Columns\TextColumn::make('nationality'),
-                Tables\Columns\TextColumn::make('marital_status'),
-                Tables\Columns\TextColumn::make('created_at')
+                Tables\Columns\TextColumn::make('gender')->label('الجنس'),
+                Tables\Columns\TextColumn::make('nationality')->label('الجنسية'),
+                Tables\Columns\TextColumn::make('marital_status')->label('الحالة الاجتماعية'),
+                Tables\Columns\TextColumn::make('created_at')->label('تاريخ التسجيل')
                     ->dateTime(),
             ])
             ->pushBulkActions([
@@ -137,28 +165,28 @@ class EmployeeResource extends Resource
                 Tables\Filters\Filter::make('created_at')
                     ->form([
                         Forms\Components\DatePicker::make('recorded_at')
-                            ->placeholder(fn ($state): string => 'Dec 18, ' . now()->subYear()->format('Y')),
+                            ->placeholder(fn($state): string => 'Dec 18, ' . now()->subYear()->format('Y')),
 
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
                             ->when(
                                 $data['recorded_at'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('recorded_at', '=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('recorded_at', '=', $date),
                             );
                     }),
                 Tables\Filters\Filter::make('marital status')
-                ->form([
-                    Forms\Components\Select::make('marital_status')
-                        ->options([
-                            'married' => 'Married',
-                            'single' => 'Single'
-                        ])
-                ])->query(function (Builder $query, array $data): Builder {
+                    ->form([
+                        Forms\Components\Select::make('marital_status')
+                            ->options([
+                                'married' => 'Married',
+                                'single' => 'Single'
+                            ])
+                    ])->query(function (Builder $query, array $data): Builder {
                         return $query
                             ->when(
                                 $data['marital_status'],
-                                fn (Builder $query, $value): Builder => $query->where('marital_status', '=', $value),
+                                fn(Builder $query, $value): Builder => $query->where('marital_status', '=', $value),
                             );
                     })
             ]);

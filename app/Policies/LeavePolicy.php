@@ -17,8 +17,8 @@ class LeavePolicy
      */
     public function viewAny(User $user)
     {
-        // return $user->can('view_any_leave');
-        return true;
+        return $user->can('view_any_leave');
+        // return true;
     }
 
     /**
@@ -29,8 +29,8 @@ class LeavePolicy
      */
     public function view(User $user)
     {
-        // return $user->can('view_leave');
-        return true;
+        return $user->can('view_leave');
+        // return true;
     }
 
     /**
@@ -41,8 +41,8 @@ class LeavePolicy
      */
     public function create(User $user)
     {
-        // return $user->can('create_leave');
-        return true;
+        return $user->can('create_leave');
+        // return true;
     }
 
     /**
@@ -53,8 +53,8 @@ class LeavePolicy
      */
     public function update(User $user)
     {
-        // return $user->can('update_leave');
-        return true;
+        return $user->can('update_leave');
+        // return true;
     }
 
     /**
@@ -65,8 +65,8 @@ class LeavePolicy
      */
     public function delete(User $user)
     {
-        // return $user->can('delete_leave');
-        return true;
+        return $user->can('delete_leave');
+        // return true;
     }
 
     /**
@@ -77,7 +77,7 @@ class LeavePolicy
      */
     public function deleteAny(User $user)
     {
-        // return $user->can('delete_any_leave');
-        return true;
+        return $user->can('delete_any_leave');
+        // return true;
     }
 }

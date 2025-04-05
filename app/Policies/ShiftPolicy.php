@@ -17,8 +17,8 @@ class ShiftPolicy
      */
     public function viewAny(User $user)
     {
-        // return $user->can('view_any_shift');
-        return true;
+        return $user->can('view_any_shift');
+        // return true;
     }
 
     /**
@@ -29,8 +29,8 @@ class ShiftPolicy
      */
     public function view(User $user)
     {
-        // return $user->can('view_shift');
-        return true;
+        return $user->can('view_shift');
+        // return true;
     }
 
     /**
@@ -41,8 +41,8 @@ class ShiftPolicy
      */
     public function create(User $user)
     {
-        // return $user->can('create_shift');
-        return true;
+        return $user->can('create_shift');
+        // return true;
     }
 
     /**
@@ -53,8 +53,8 @@ class ShiftPolicy
      */
     public function update(User $user)
     {
-        // return $user->can('update_shift');
-        return true;
+        return $user->can('update_shift');
+        // return true;
     }
 
     /**
@@ -65,8 +65,8 @@ class ShiftPolicy
      */
     public function delete(User $user)
     {
-        // return $user->can('delete_shift');
-        return true;
+        return $user->can('delete_shift');
+        // return true;
     }
 
     /**
@@ -77,7 +77,7 @@ class ShiftPolicy
      */
     public function deleteAny(User $user)
     {
-        // return $user->can('delete_any_shift');
-        return true;
+        return $user->can('delete_any_shift');
+        // return true;
     }
 }

@@ -17,8 +17,8 @@ class ContractPolicy
      */
     public function viewAny(User $user)
     {
-        // return $user->can('view_any_contract');
-        return true;
+        return $user->can('view_any_contract');
+        // return true;
     }
 
     /**
@@ -29,8 +29,8 @@ class ContractPolicy
      */
     public function view(User $user)
     {
-        // return $user->can('view_contract');
-        return true;
+        return $user->can('view_contract');
+        // return true;
     }
 
     /**
@@ -41,8 +41,8 @@ class ContractPolicy
      */
     public function create(User $user)
     {
-        // return $user->can('create_contract');
-        return true;
+        return $user->can('create_contract');
+        // return true;
     }
 
     /**
@@ -53,8 +53,8 @@ class ContractPolicy
      */
     public function update(User $user)
     {
-        // return $user->can('update_contract');
-        return true;
+        return $user->can('update_contract');
+        // return true;
     }
 
     /**
@@ -65,8 +65,8 @@ class ContractPolicy
      */
     public function delete(User $user)
     {
-        // return $user->can('delete_contract');
-        return true;
+        return $user->can('delete_contract');
+        // return true;
     }
 
     /**
@@ -77,7 +77,7 @@ class ContractPolicy
      */
     public function deleteAny(User $user)
     {
-        // return $user->can('delete_any_contract');
-        return true;
+        return $user->can('delete_any_contract');
+        // return true;
     }
 }

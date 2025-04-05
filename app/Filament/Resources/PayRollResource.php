@@ -19,7 +19,17 @@ class PayRollResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
 
-    protected static ?string $navigationGroup = 'Employees';
+    protected static ?string $navigationGroup = 'الموظفين';
+
+
+
+    protected static ?string $navigationLabel = 'كشوف الرواتب';
+    protected static ?string $title = 'كشف الراتب';
+    protected static ?string $label = 'كشف راتب';
+    protected static ?string $pluralLabel = 'كشوف الرواتب';
+
+
+
 
     public static function form(Form $form): Form
     {
@@ -29,9 +39,11 @@ class PayRollResource extends Resource
                     ->label('Employee')
                     ->options(Employee::all()->pluck('full_name', 'id'))
                     ->reactive()
-                    ->afterStateUpdated(fn ($state, callable $set) =>
-                    $set('pay_scale_id',
-                        (Employee::find($state))->financial_details()->first()?->pay_scale?->id))
+                    ->afterStateUpdated(fn($state, callable $set) =>
+                    $set(
+                        'pay_scale_id',
+                        (Employee::find($state))->financial_details()->first()?->pay_scale?->id
+                    ))
                     ->required(),
                 Forms\Components\Select::make('pay_scale_id')
                     ->label('Pay scale')
@@ -92,7 +104,7 @@ class PayRollResource extends Resource
             ])
             ->prependActions([
                 Tables\Actions\LinkAction::make('payslip')
-                    ->url(fn ($record) => route('payslip.download', $record->id))
+                    ->url(fn($record) => route('payslip.download', $record->id))
                     ->icon('heroicon-o-download')
                     ->color('primary'),
             ])

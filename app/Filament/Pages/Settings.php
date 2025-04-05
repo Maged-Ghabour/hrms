@@ -14,7 +14,14 @@ class Settings extends Page
 
     protected static string $view = 'filament.pages.settings';
 
-    protected static ?string $navigationGroup = 'Settings';
+    protected static ?string $navigationGroup = 'الإعدادات';
+
+    protected static ?string $navigationLabel = 'الإعدادات';
+    protected static ?string $title = 'الإعدادات';
+    protected static ?string $slug = 'settings';
+    protected static ?string $label = 'الإعدادات';
+    protected static ?string $pluralLabel = 'الإعدادات';
+
 
     public function mount(): void
     {
@@ -69,34 +76,60 @@ class Settings extends Page
     protected function getFormSchema(): array
     {
         return [
-            Forms\Components\Tabs::make('Settings')
+            Forms\Components\Tabs::make('الإعدادات')
                 ->tabs([
-                    Forms\Components\Tabs\Tab::make('Company Details')
+                    Forms\Components\Tabs\Tab::make('تفاصيل الشركة')
                         ->schema([
-                            Forms\Components\TextInput::make('company.name')->required(),
-                            Forms\Components\TextInput::make('company.phone')->required(),
-                            Forms\Components\TextInput::make('company.email')->required(),
-                            Forms\Components\TextInput::make('company.website')->required(),
-                            Forms\Components\TextInput::make('company.fax')->required(),
-                            Forms\Components\TextInput::make('company.address')->required(),
-                            Forms\Components\TextInput::make('company.city')->required(),
-                            Forms\Components\TextInput::make('company.state')->required(),
-                            Forms\Components\TextInput::make('company.postcode')->required(),
-                            Forms\Components\TextInput::make('company.country')->required(),
+                            Forms\Components\TextInput::make('company.name')
+                                ->label('اسم الشركة')
+                                ->required(),
+                            Forms\Components\TextInput::make('company.phone')
+                                ->label('رقم الهاتف')
+                                ->required(),
+                            Forms\Components\TextInput::make('company.email')
+                                ->label('البريد الإلكتروني')
+                                ->required(),
+                            Forms\Components\TextInput::make('company.website')
+                                ->label('الموقع الإلكتروني')
+                                ->required(),
+                            Forms\Components\TextInput::make('company.fax')
+                                ->label('الفاكس')
+                                ->required(),
+                            Forms\Components\TextInput::make('company.address')
+                                ->label('العنوان')
+                                ->required(),
+                            Forms\Components\TextInput::make('company.city')
+                                ->label('المدينة')
+                                ->required(),
+                            Forms\Components\TextInput::make('company.state')
+                                ->label('المحافظة')
+                                ->required(),
+                            Forms\Components\TextInput::make('company.postcode')
+                                ->label('الرمز البريدي')
+                                ->required(),
+                            Forms\Components\TextInput::make('company.country')
+                                ->label('الدولة')
+
+                                ->required(),
                         ]),
                     Forms\Components\Tabs\Tab::make('System')
+                        ->label('النظام')
                         ->schema([
-                            Forms\Components\TextInput::make('company.employee_number_prefix')->required(),
+                            Forms\Components\TextInput::make('company.employee_number_prefix')
+                                ->label('رقم الموظف')
+                                ->required(),
                             Forms\Components\Select::make('company.currency')
+                                ->label('العملة')
                                 ->options([
-                                    'TZS' => 'TZS',
-                                    'USD' => 'USD',
+                                    'EGP' => 'EGP',
                                 ])
                                 ->required(),
                         ]),
                     Forms\Components\Tabs\Tab::make('Logo and Title')
+                        ->label('الشعار والعنوان')
                         ->schema([
-                            Forms\Components\TextInput::make('company.site_name')->required(),
+                            Forms\Components\TextInput::make('company.site_name')->required()
+                                ->label('اسم الموقع'),
                         ]),
                 ]),
         ];

@@ -17,8 +17,8 @@ class SalaryTypePolicy
      */
     public function viewAny(User $user)
     {
-        // return $user->can('view_any_salarytype');
-        return true;
+        return $user->can('view_any_salarytype');
+        // return true;
     }
 
     /**
@@ -29,8 +29,8 @@ class SalaryTypePolicy
      */
     public function view(User $user)
     {
-        // return $user->can('view_salarytype');
-        return true;
+        return $user->can('view_salarytype');
+        // return true;
     }
 
     /**
@@ -41,8 +41,8 @@ class SalaryTypePolicy
      */
     public function create(User $user)
     {
-        // return $user->can('create_salarytype');
-        return true;
+        return $user->can('create_salarytype');
+        // return true;
     }
 
     /**
@@ -53,8 +53,8 @@ class SalaryTypePolicy
      */
     public function update(User $user)
     {
-        // return $user->can('update_salarytype');
-        return true;
+        return $user->can('update_salarytype');
+        // return true;
     }
 
     /**
@@ -65,8 +65,8 @@ class SalaryTypePolicy
      */
     public function delete(User $user)
     {
-        // return $user->can('delete_salarytype');
-        return true;
+        return $user->can('delete_salarytype');
+        // return true;
     }
 
     /**
@@ -77,7 +77,7 @@ class SalaryTypePolicy
      */
     public function deleteAny(User $user)
     {
-        // return $user->can('delete_any_salarytype');
-        return true;
+        return $user->can('delete_any_salarytype');
+        // return true;
     }
 }

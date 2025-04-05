@@ -17,8 +17,8 @@ class DepartmentPolicy
      */
     public function viewAny(User $user)
     {
-        // return $user->can('view_any_department');
-        return true;
+        return $user->can('view_any_department');
+        // return true;
     }
 
     /**
@@ -29,8 +29,8 @@ class DepartmentPolicy
      */
     public function view(User $user)
     {
-        // return $user->can('view_department');
-        return true;
+        return $user->can('view_department');
+        // return true;
     }
 
     /**
@@ -41,8 +41,8 @@ class DepartmentPolicy
      */
     public function create(User $user)
     {
-        // return $user->can('create_department');
-        return true;
+        return $user->can('create_department');
+        // return true;
     }
 
     /**
@@ -53,8 +53,8 @@ class DepartmentPolicy
      */
     public function update(User $user)
     {
-        // return $user->can('update_department');
-        return true;
+        return $user->can('update_department');
+        // return true;
     }
 
     /**
@@ -65,8 +65,8 @@ class DepartmentPolicy
      */
     public function delete(User $user)
     {
-        // return $user->can('delete_department');
-        return true;
+        return $user->can('delete_department');
+        // return true;
     }
 
     /**
@@ -77,7 +77,7 @@ class DepartmentPolicy
      */
     public function deleteAny(User $user)
     {
-        // return $user->can('delete_any_department');
-        return true;
+        return $user->can('delete_any_department');
+        // return true;
     }
 }

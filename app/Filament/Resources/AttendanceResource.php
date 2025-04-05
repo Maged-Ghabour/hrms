@@ -27,53 +27,64 @@ class AttendanceResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-list';
 
-    protected static ?string $navigationGroup = 'Employees';
+    protected static ?string $navigationGroup = 'الموظفين';
+
+    protected static ?string $navigationLabel = 'الحضور';
+    protected static ?string $title = 'الحضور';
+    protected static ?string $label = 'حضور';
+    protected static ?string $pluralLabel = 'الحضور';
+
+
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                auth()->user()->hasRole('employee')?
+                auth()->user()->hasRole('employee') ?
                     Forms\Components\Hidden::make('employee_id')
-                        ->default((Employee::firstWhere('user_id', auth()->user()->id))->id)
-                        ->label('employee')
-                        ->required():
+                    ->default((Employee::firstWhere('user_id', auth()->user()->id))->id)
+                    ->label('الموظف')
+                    ->required() :
                     Forms\Components\Select::make('employee_id')
-                        ->label('employee')
-                        ->options(Employee::all()->pluck('full_name','id'))
-                        ->required(),
+                    ->label('الموظف')
+                    ->options(Employee::all()->pluck('full_name', 'id'))
+                    ->required(),
                 Forms\Components\Hidden::make('recorded_by')
                     ->default(auth()->user()->id)
                     ->required(),
                 Forms\Components\Select::make('shift_id')
-                    ->label('shift')
+                    ->label('الفترة')
                     ->options(Shift::all()->pluck('name', 'id'))
                     ->required(),
                 Forms\Components\TimePicker::make('time_id')
-                    ->label('Time in')
+                    ->label('وقت الدخول')
                     ->default(now()),
                 Forms\Components\TimePicker::make('time_out')
+                    ->label('وقت الخروج')
                     ->default(now()),
-                auth()->user()->hasRole('employee')?
+                auth()->user()->hasRole('employee') ?
                     Forms\Components\Hidden::make('status')
-                        ->required()
-                        ->default('present'):
+                    ->required()
+                    ->default('present') :
                     Forms\Components\Select::make('status')
+                    ->label('الحالة')
+
                     ->required()
                     ->default('present')
                     ->options([
-                        'on_leave' => 'On Leave',
-                        'present' => 'Present',
-                        'absent' => 'Absent',
+                        'on_leave' => 'في أجازة',
+                        'present' => 'حاضر',
+                        'absent' => 'غائب',
                     ]),
-                auth()->user()->hasRole('employee')?
+                auth()->user()->hasRole('employee') ?
                     Forms\Components\Hidden::make('is_confirmed')
-                        ->required()
-                        ->default(false):
+                    ->required()
+                    ->default(false) :
                     Forms\Components\Toggle::make('is_confirmed')
-                        ->required()
-                        ,
+                    ->label('تم التأكيد')
+                    ->required(),
                 Forms\Components\DateTimePicker::make('recorded_at')
+                    ->label('وقت التسجيل')
                     ->default(now())
                     ->disabled()
             ]);
@@ -84,18 +95,25 @@ class AttendanceResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\BooleanColumn::make('is_confirmed')
-                    ->label('confirmed'),
+                    ->label('تم التأكيد'),
                 Tables\Columns\TextColumn::make('employee.full_name')
+                    ->label('اسم الموظف')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('user.name')
-                    ->label('Recorded by')
+
+                    ->label('تم التأكيد بواسطة')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('shift.name'),
-                Tables\Columns\TextColumn::make('time_id')->time(),
-                Tables\Columns\TextColumn::make('time_out')->time(),
+                Tables\Columns\TextColumn::make('shift.name')
+                    ->label('الفترة'),
+
+                Tables\Columns\TextColumn::make('time_id')->time()
+                    ->label('وقت الدخول'),
+                Tables\Columns\TextColumn::make('time_out')->time()
+                    ->label('وقت الخروج'),
                 Tables\Columns\BadgeColumn::make('status')
+                    ->label('الحالة')
                     ->colors([
                         'secondary',
                         'danger' => 'absent',
@@ -103,13 +121,15 @@ class AttendanceResource extends Resource
                         'success' => 'present',
                     ]),
                 Tables\Columns\TextColumn::make('recorded_at')
+                    ->label('وقت التسجيل')
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('تاريخ الإنشاء')
                     ->dateTime(),
             ])
             ->pushBulkActions([
                 BulkAction::make('export')
-                    ->action(fn (Collection $records) => redirect(route('attendance.download')))
+                    ->action(fn(Collection $records) => redirect(route('attendance.download')))
                     ->icon('heroicon-o-document-download')
                     ->label('Export Data')
             ])
@@ -118,14 +138,14 @@ class AttendanceResource extends Resource
                     ->form([
                         Forms\Components\DatePicker::make('recorded_at')
                             ->default(now())
-                            ->placeholder(fn ($state): string => 'Dec 18, ' . now()->subYear()->format('Y')),
+                            ->placeholder(fn($state): string => 'Dec 18, ' . now()->subYear()->format('Y')),
 
                     ])
                     ->query(function (Builder $query, array $data): Builder {
                         return $query
                             ->when(
                                 $data['recorded_at'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('recorded_at', '>=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('recorded_at', '>=', $date),
                             );
                     }),
             ]);

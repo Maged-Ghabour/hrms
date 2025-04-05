@@ -17,29 +17,40 @@ class LeaveTypeResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-external-link';
 
-    protected static ?string $navigationGroup = 'Settings';
+    protected static ?string $navigationGroup = 'الإعدادات';
+
+
+
+    protected static ?string $navigationLabel = 'أنواع الإجازات';
+    protected static ?string $title = 'أنواع الإجازات';
+    protected static ?string $label = 'نوع إجازة';
+    protected static ?string $pluralLabel = 'أنواع الإجازات';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('اسم الإجازة')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Select::make('credit_type')
-                    ->label('Duration Type')
+                    ->label('المدة الزمنية')
+                    ->placeholder('اختر المدة الزمنية')
+
                     ->options([
-                        'day' => 'Day',
-                        'week' => 'Week',
-                        'month' => 'Month',
-                        'year' => 'Year',
+                        'day' => 'يومي',
+                        'week' => 'أسبوعي',
+                        'month' => 'شهري',
+                        'year' => 'سنوي',
                     ])->required(),
                 Forms\Components\TextInput::make('credit_leaves')
-                    ->label('Duration Length')
+                    ->label('عدد الأيام')
                     ->numeric()
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Textarea::make('description')
+                    ->label('الوصف')
                     ->maxLength(65535),
             ]);
     }
@@ -48,12 +59,19 @@ class LeaveTypeResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('credit_type')->label('Duration Type'),
-                Tables\Columns\TextColumn::make('credit_leaves')->label('Duration length'),
+                Tables\Columns\TextColumn::make('name')
+                    ->label('اسم الإجازة')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('credit_type')
+                    ->label('المدة الزمنية'),
+                Tables\Columns\TextColumn::make('credit_leaves')
+                    ->label('عدد الأيام'),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('تاريخ الإنشاء')
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('تاريخ التحديث')
                     ->dateTime(),
             ])
             ->filters([

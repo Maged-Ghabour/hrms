@@ -22,52 +22,65 @@ class ContractResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-paper-clip';
 
-    protected static ?string $navigationGroup = 'Employees';
+    protected static ?string $navigationGroup = 'الموظفين';
 
-    protected static ?string $navigationLabel = 'Contracts';
 
-    protected static ?string $pluralLabel = 'Contracts';
+
+    protected static ?string $navigationLabel = 'جهات الاتصال';
+    protected static ?string $title = 'جهات الاتصال';
+    protected static ?string $label = 'جهة الاتصال';
+    protected static ?string $pluralLabel = 'جهات الاتصال';
+
+
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Select::make('employee_id')
-                    ->label('Employee')
+                    ->label('اختر  الموظف')
+                    ->reactive()
+                    ->searchable()
+                    ->placeholder('اسم  الموظف')
                     ->options(Employee::all()->pluck('full_name', 'id'))
                     ->required(),
                 Forms\Components\TextInput::make('employee_number')
+                    ->label('رقم الموظف')
                     ->disabled()
-                    ->default('OMA-'.rand(111,444).'-'.rand(555,999).'-'. now()->year)
-                    ->unique(EmployeeCompanyDetail::class, 'employee_number', fn ($record) => $record)
+                    ->default('OMA-' . rand(111, 444) . '-' . rand(555, 999) . '-' . now()->year)
+                    ->unique(EmployeeCompanyDetail::class, 'employee_number', fn($record) => $record)
                     ->maxLength(255),
                 Forms\Components\DatePicker::make('joined_at')
+                    ->label('تاريخ الانضمام')
                     ->required()
                     ->default(now()),
                 Forms\Components\DatePicker::make('left_at')
+                    ->label('تاريخ انتهاء العقد')
                     ->default(now()),
                 Forms\Components\Select::make('status')
+                    ->label('حالة العقد')
                     ->options([
-                        'active' => 'Active',
-                        'contract_end' => 'Contract End',
-                        'terminate_contract' => 'Terminate Contract',
+                        'active' => 'نشط',
+                        'contract_end' => 'انتهاء العقد',
+                        'terminate_contract' => 'إنهاء العقد',
                     ]),
                 Forms\Components\Select::make('department_id')
                     ->required()
-                    ->label('Department')
+                    ->label('القسم')
                     ->options(Department::all()->pluck('name', 'id'))
                     ->searchable(),
                 Forms\Components\Select::make('manager_id')
-                    ->label('Manager')
+                    ->label('مدير القسم')
                     ->options(Employee::all()->pluck('first_name', 'id'))
                     ->searchable(),
                 Forms\Components\Select::make('shift_id')
                     ->required()
-                    ->label('Shift')
+                    ->label('الوردية')
                     ->options(Shift::all()->pluck('name', 'id'))
                     ->searchable(),
                 SpatieMediaLibraryFileUpload::make('Contract Document')
                     ->collection('employee-contracts')
+                    ->label('مستندات العقد')
                     ->multiple()
                     ->minFiles(1)
                     ->maxFiles(5),

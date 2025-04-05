@@ -17,8 +17,8 @@ class PerformancePolicy
      */
     public function viewAny(User $user)
     {
-        // return $user->can('view_any_performance');
-        return true;
+        return $user->can('view_any_performance');
+        // return true;
     }
 
     /**
@@ -29,8 +29,8 @@ class PerformancePolicy
      */
     public function view(User $user)
     {
-        // return $user->can('view_performance');
-        return true;
+        return $user->can('view_performance');
+        // return true;
     }
 
     /**
@@ -41,8 +41,8 @@ class PerformancePolicy
      */
     public function create(User $user)
     {
-        // return $user->can('create_performance');
-        return true;
+        return $user->can('create_performance');
+        // return true;
     }
 
     /**
@@ -53,8 +53,8 @@ class PerformancePolicy
      */
     public function update(User $user)
     {
-        // return $user->can('update_performance');
-        return true;
+        return $user->can('update_performance');
+        // return true;
     }
 
     /**
@@ -65,8 +65,8 @@ class PerformancePolicy
      */
     public function delete(User $user)
     {
-        // return $user->can('delete_performance');
-        return true;
+        return $user->can('delete_performance');
+        // return true;
     }
 
     /**
@@ -77,7 +77,7 @@ class PerformancePolicy
      */
     public function deleteAny(User $user)
     {
-        // return $user->can('delete_any_performance');
-        return true;
+        return $user->can('delete_any_performance');
+        // return true;
     }
 }

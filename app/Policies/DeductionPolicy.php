@@ -17,8 +17,8 @@ class DeductionPolicy
      */
     public function viewAny(User $user)
     {
-        // return $user->can('view_any_deduction');
-        return true;
+        return $user->can('view_any_deduction');
+        // return true;
     }
 
     /**
@@ -29,8 +29,8 @@ class DeductionPolicy
      */
     public function view(User $user)
     {
-        // return $user->can('view_deduction');
-        return true;
+        return $user->can('view_deduction');
+        // return true;
     }
 
     /**
@@ -41,8 +41,8 @@ class DeductionPolicy
      */
     public function create(User $user)
     {
-        // return $user->can('create_deduction');
-        return true;
+        return $user->can('create_deduction');
+        // return true;
     }
 
     /**
@@ -53,8 +53,8 @@ class DeductionPolicy
      */
     public function update(User $user)
     {
-        // return $user->can('update_deduction');
-        return true;
+        return $user->can('update_deduction');
+        // return true;
     }
 
     /**
@@ -65,8 +65,8 @@ class DeductionPolicy
      */
     public function delete(User $user)
     {
-        // return $user->can('delete_deduction');
-        return true;
+        return $user->can('delete_deduction');
+        // return true;
     }
 
     /**
@@ -77,7 +77,7 @@ class DeductionPolicy
      */
     public function deleteAny(User $user)
     {
-        // return $user->can('delete_any_deduction');
-        return true;
+        return $user->can('delete_any_deduction');
+        // return true;
     }
 }

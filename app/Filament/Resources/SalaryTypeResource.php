@@ -17,17 +17,26 @@ class SalaryTypeResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-color-swatch';
 
-    protected static ?string $navigationGroup = 'Settings';
+    protected static ?string $navigationGroup = 'الإعدادات';
+
+
+    protected static ?string $navigationLabel = 'أنواع الرواتب';
+    protected static ?string $title = 'أنواع الرواتب';
+    protected static ?string $label = ' نوع الراتب';
+    protected static ?string $pluralLabel = '   أنواع الرواتب';
+
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('اسم نوع الراتب')
                     ->required()
                     ->maxLength(255)
-                ->columns(1),
+                    ->columns(1),
                 Forms\Components\Textarea::make('description')
+                    ->label('الوصف')
                     ->maxLength(65535),
             ]);
     }
@@ -36,10 +45,14 @@ class SalaryTypeResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('name')
+                    ->label('اسم نوع الراتب'),
+
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('تاريخ الإنشاء')
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('تاريخ التحديث')
                     ->dateTime(),
             ])
             ->filters([

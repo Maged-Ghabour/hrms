@@ -17,13 +17,21 @@ class AllowanceResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-cash';
 
-    protected static ?string $navigationGroup = 'Settings';
+    protected static ?string $navigationGroup = 'الإعدادات';
+
+
+    protected static ?string $navigationLabel = 'البدلات';
+    protected static ?string $title = 'البدلات';
+    protected static ?string $label = 'بدل';
+    protected static ?string $pluralLabel = 'بدلات';
+
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('الاسم')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -33,10 +41,14 @@ class AllowanceResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('name')
+                    ->label('الاسم'),
+
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('الإنشاء')
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('التعديل')
                     ->dateTime(),
             ])
             ->filters([

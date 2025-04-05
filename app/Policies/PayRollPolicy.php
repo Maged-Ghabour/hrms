@@ -17,8 +17,8 @@ class PayRollPolicy
      */
     public function viewAny(User $user)
     {
-        // return $user->can('view_any_payroll');
-        return true;
+        return $user->can('view_any_payroll');
+        // return true;
     }
 
     /**
@@ -29,8 +29,8 @@ class PayRollPolicy
      */
     public function view(User $user)
     {
-        // return $user->can('view_payroll');
-        return true;
+        return $user->can('view_payroll');
+        // return true;
     }
 
     /**
@@ -41,8 +41,8 @@ class PayRollPolicy
      */
     public function create(User $user)
     {
-        // return $user->can('create_payroll');
-        return true;
+        return $user->can('create_payroll');
+        // return true;
     }
 
     /**
@@ -53,8 +53,8 @@ class PayRollPolicy
      */
     public function update(User $user)
     {
-        // return $user->can('update_payroll');
-        return true;
+        return $user->can('update_payroll');
+        // return true;
     }
 
     /**
@@ -65,8 +65,8 @@ class PayRollPolicy
      */
     public function delete(User $user)
     {
-        // return $user->can('delete_payroll');
-        return true;
+        return $user->can('delete_payroll');
+        // return true;
     }
 
     /**
@@ -77,7 +77,7 @@ class PayRollPolicy
      */
     public function deleteAny(User $user)
     {
-        // return $user->can('delete_any_payroll');
-        return true;
+        return $user->can('delete_any_payroll');
+        // return true;
     }
 }

@@ -17,8 +17,8 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        // return $user->can('view_any_user');
-        return true;
+        return $user->can('view_any_user');
+        // return true;
     }
 
     /**
@@ -29,8 +29,8 @@ class UserPolicy
      */
     public function view(User $user)
     {
-        // return $user->can('view_user');
-        return true;
+        return $user->can('view_user');
+        // return true;
     }
 
     /**
@@ -41,8 +41,8 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        // return $user->can('create_user');
-        return true;
+        return $user->can('create_user');
+        // return true;
     }
 
     /**
@@ -53,8 +53,8 @@ class UserPolicy
      */
     public function update(User $user)
     {
-        // return $user->can('update_user');
-        return true;
+        return $user->can('update_user');
+        // return true;
     }
 
     /**
@@ -65,8 +65,8 @@ class UserPolicy
      */
     public function delete(User $user)
     {
-        // return $user->can('delete_user');
-        return true;
+        return $user->can('delete_user');
+        // return true;
     }
 
     /**
@@ -77,7 +77,7 @@ class UserPolicy
      */
     public function deleteAny(User $user)
     {
-        // return $user->can('delete_any_user');
-        return true;
+        return $user->can('delete_any_user');
+        // return true;
     }
 }

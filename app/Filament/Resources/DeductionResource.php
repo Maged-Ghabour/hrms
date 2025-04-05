@@ -17,13 +17,22 @@ class DeductionResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-minus-circle';
 
-    protected static ?string $navigationGroup = 'Settings';
+    protected static ?string $navigationGroup = 'الإعدادات';
+
+
+
+    protected static ?string $navigationLabel = 'الخصومات';
+    protected static ?string $title = 'الخصومات';
+    protected static ?string $label = 'خصم';
+    protected static ?string $pluralLabel = 'خصومات';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('الاسم')
+                    ->reactive()
                     ->required()
                     ->maxLength(255),
             ]);
@@ -33,10 +42,14 @@ class DeductionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('name')
+                    ->label('الاسم')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('تاريخ الإنشاء')
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('تاريخ التحديث')
                     ->dateTime(),
             ])
             ->filters([

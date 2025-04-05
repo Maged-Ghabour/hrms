@@ -14,9 +14,11 @@
         "filament/filament": "^2.0",
         "filament/spatie-laravel-media-library-plugin": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
+        "konnco/filament-import": "^1.2",
         "laravel/framework": "^9.2",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
+        "maatwebsite/excel": "^3.1",
         "psr/simple-cache": "^1.0",
         "pxlrbt/filament-excel": "^0.1.2",
         "simplesoftwareio/simple-qrcode": "^4.2"

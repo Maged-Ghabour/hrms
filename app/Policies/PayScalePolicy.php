@@ -17,8 +17,8 @@ class PayScalePolicy
      */
     public function viewAny(User $user)
     {
-        // return $user->can('view_any_payscale');
-        return true;
+        return $user->can('view_any_payscale');
+        // return true;
     }
 
     /**
@@ -29,8 +29,8 @@ class PayScalePolicy
      */
     public function view(User $user)
     {
-        // return $user->can('view_payscale');
-        return true;
+        return $user->can('view_payscale');
+        // return true;
     }
 
     /**
@@ -41,8 +41,8 @@ class PayScalePolicy
      */
     public function create(User $user)
     {
-        // return $user->can('create_payscale');
-        return true;
+        return $user->can('create_payscale');
+        // return true;
     }
 
     /**
@@ -53,8 +53,8 @@ class PayScalePolicy
      */
     public function update(User $user)
     {
-        // return $user->can('update_payscale');
-        return true;
+        return $user->can('update_payscale');
+        // return true;
     }
 
     /**
@@ -65,8 +65,8 @@ class PayScalePolicy
      */
     public function delete(User $user)
     {
-        // return $user->can('delete_payscale');
-        return true;
+        return $user->can('delete_payscale');
+        // return true;
     }
 
     /**
@@ -77,7 +77,7 @@ class PayScalePolicy
      */
     public function deleteAny(User $user)
     {
-        // return $user->can('delete_any_payscale');
-        return true;
+        return $user->can('delete_any_payscale');
+        // return true;
     }
 }

@@ -19,14 +19,20 @@ class DepartmentResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-office-building';
 
-    protected static ?string $navigationGroup = 'Settings';
+    protected static ?string $navigationGroup = 'الإعدادات';
+
+
+    protected static ?string $navigationLabel = 'الأقسام';
+    protected static ?string $title = 'القسم';
+    protected static ?string $label = 'قسم';
+    protected static ?string $pluralLabel = 'أقسام';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema(static::getFormSchema(Forms\Components\Card::class))
             ->columns([
-                'ms'=>2
+                'ms' => 2
             ]);
     }
 
@@ -34,11 +40,17 @@ class DepartmentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')->searchable(),
-                Tables\Columns\TextColumn::make('description'),
+                Tables\Columns\TextColumn::make('name')->searchable()->sortable()
+                    ->label('اسم القسم'),
+
+                Tables\Columns\TextColumn::make('description')
+                    ->label('الوصف'),
+
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('تاريخ الإنشاء')
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('تاريخ التحديث')
                     ->dateTime(),
             ])
             ->filters([
@@ -66,14 +78,15 @@ class DepartmentResource extends Resource
     {
         return [
             Forms\Components\Group::make()
-            ->schema([
-                $layout::make()->schema([
-                    Forms\Components\TextInput::make('name')->required()->maxLength(255),
-                    Forms\Components\Textarea::make('description')->columns(),
-                ])
-            ])->columnSpan(2),
+                ->schema([
+                    $layout::make()->schema([
+                        Forms\Components\TextInput::make('name')->required()->maxLength(255)
+                            ->label('اسم القسم'),
+                        Forms\Components\Textarea::make('description')->columns()
+                            ->label('الوصف'),
+                    ])
+                ])->columnSpan(2),
 
         ];
     }
-
 }

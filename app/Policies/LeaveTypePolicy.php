@@ -17,8 +17,8 @@ class LeaveTypePolicy
      */
     public function viewAny(User $user)
     {
-        // return $user->can('view_any_leavetype');
-        return true;
+        return $user->can('view_any_leavetype');
+        // return true;
     }
 
     /**
@@ -29,8 +29,8 @@ class LeaveTypePolicy
      */
     public function view(User $user)
     {
-        // return $user->can('view_leavetype');
-        return true;
+        return $user->can('view_leavetype');
+        // return true;
     }
 
     /**
@@ -41,8 +41,8 @@ class LeaveTypePolicy
      */
     public function create(User $user)
     {
-        // return $user->can('create_leavetype');
-        return true;
+        return $user->can('create_leavetype');
+        // return true;
     }
 
     /**
@@ -53,8 +53,8 @@ class LeaveTypePolicy
      */
     public function update(User $user)
     {
-        // return $user->can('update_leavetype');
-        return true;
+        return $user->can('update_leavetype');
+        // return true;
     }
 
     /**
@@ -65,8 +65,8 @@ class LeaveTypePolicy
      */
     public function delete(User $user)
     {
-        // return $user->can('delete_leavetype');
-        return true;
+        return $user->can('delete_leavetype');
+        // return true;
     }
 
     /**
@@ -77,7 +77,7 @@ class LeaveTypePolicy
      */
     public function deleteAny(User $user)
     {
-        // return $user->can('delete_any_leavetype');
-        return true;
+        return $user->can('delete_any_leavetype');
+        // return true;
     }
 }

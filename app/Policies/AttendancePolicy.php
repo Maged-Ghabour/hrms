@@ -17,8 +17,7 @@ class AttendancePolicy
      */
     public function viewAny(User $user)
     {
-        // return $user->can('view_any_attendance');
-        return true;
+        return $user->can('view_any_attendance');
     }
 
     /**
@@ -29,8 +28,7 @@ class AttendancePolicy
      */
     public function view(User $user)
     {
-        // return $user->can('view_attendance');
-        return true;
+        return $user->can('view_attendance');
     }
 
     /**
@@ -41,8 +39,7 @@ class AttendancePolicy
      */
     public function create(User $user)
     {
-        // return $user->can('create_attendance');
-        return true;
+        return $user->can('create_attendance');
     }
 
     /**
@@ -53,8 +50,7 @@ class AttendancePolicy
      */
     public function update(User $user)
     {
-        // return $user->can('update_attendance');
-        return true;
+        return $user->can('update_attendance');
     }
 
     /**
@@ -65,8 +61,7 @@ class AttendancePolicy
      */
     public function delete(User $user)
     {
-        // return $user->can('delete_attendance');
-        return true;
+        return $user->can('delete_attendance');
     }
 
     /**
@@ -77,7 +72,6 @@ class AttendancePolicy
      */
     public function deleteAny(User $user)
     {
-        // return $user->can('delete_any_attendance');
-        return true;
+        return $user->can('delete_any_attendance');
     }
 }
