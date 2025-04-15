@@ -6,6 +6,7 @@ use Filament\Http\Middleware\MirrorConfigToSubpackages;
 use Filament\Pages;
 use Filament\Resources;
 use Filament\Widgets;
+use Filament\Widgets\Widget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -144,6 +145,7 @@ return [
         'register' => [
             Widgets\AccountWidget::class,
             Widgets\FilamentInfoWidget::class,
+            // Widgets\ClientWidget::class
         ],
     ],
 
@@ -220,7 +222,7 @@ return [
     |
     */
 
-    'favicon' => 'http://127.0.0.1:8000/favicon.jpg',
+    'favicon' => 'http://127.0.0.1:8000/favicon.png',
 
     /*
     |--------------------------------------------------------------------------

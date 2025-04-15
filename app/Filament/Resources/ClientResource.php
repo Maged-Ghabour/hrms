@@ -10,6 +10,24 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Forms\Components\Select;
+
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Filters\Filter;
+use Filament\Forms\Components\DatePicker;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Actions\ViewAction;
+
+
+
+
+
+
+
+
+
 
 class ClientResource extends Resource
 {
@@ -39,10 +57,47 @@ class ClientResource extends Resource
                     ->label(' اسم المتجر بالعربية'),
                 Forms\Components\TextInput::make('storeName_en')
                     ->label(' اسم المتجر بالانجليزية'),
-                Forms\Components\TextInput::make('store_category')
-                    ->label('فئة المتجر'),
-                Forms\Components\TextInput::make('store_rate')
-                    ->label('تقييم المتجر'),
+
+
+                Forms\Components\Select::make('store_category')
+                    ->label('فئة المتجر')
+                    ->placeholder('تصنيف المتجر')
+                    ->options([
+                        'إلكترونيات' => 'إلكترونيات',
+                        'موضة وأزياء' => 'موضة وأزياء',
+                        'تجميل وعناية' => 'تجميل وعناية',
+                        'بقالة ومواد غذائية' => 'بقالة ومواد غذائية',
+                        'furniture' => 'أثاث وديكور',
+                        'كتب ومجلات' => 'كتب ومجلات',
+                        'ألعاب وهوايات' => 'ألعاب وهوايات',
+                        'رياضة ولياقة' => 'رياضة ولياقة',
+                        'سيارات واكسسوارات' => 'سيارات واكسسوارات',
+                        'معدات وأدوات' => 'معدات وأدوات',
+                        'مستلزمات الحيوانات' => 'مستلزمات الحيوانات',
+                        'مكتبية وقرطاسية' => 'مكتبية وقرطاسية',
+                        'مجوهرات واكسسوارات' => 'مجوهرات واكسسوارات',
+                        'هواتف واكسسوارات' => 'هواتف واكسسوارات',
+                        'منتجات يدوية' => 'منتجات يدوية',
+                        'أخري' => 'أخري'
+                    ]),
+
+
+                Forms\Components\Select::make('store_rate')
+                    ->label('تقييم المتجر')
+                    ->placeholder("تقييم المتجر")
+                    ->options([
+                        "1" => 1,
+                        "2" => 2,
+                        "3" => 3,
+                        "4" => 4,
+                        "5" => 5,
+                        "6" => 6,
+                        "7" => 7,
+                        "8" => 8,
+                        "9" => 9,
+                        "10" => 10
+
+                    ]),
                 Forms\Components\SpatieMediaLibraryFileUpload::make('store_image')
                     ->collection('store_images')
                     ->label('صورة المتجر'),
@@ -52,9 +107,9 @@ class ClientResource extends Resource
                     ->hint("هل العميل مهتم أم لا؟!")
                     ->label('الحالة')
                     ->options([
-                        'لم يتم التواصل' => 'لم يتم التواصل',
-                        'مهتم' => 'مهتم',
-                        'غير مهتم' => 'غير مهتم',
+                        'pending' => 'لم يتم التواصل',
+                        'approved' => 'مهتم',
+                        'rejected' => 'غير مهتم',
                     ])
                     ->placeholder('حالة العميل')
 
@@ -80,18 +135,153 @@ class ClientResource extends Resource
                     ->label('اسم المتجر بالعربي')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('store_category')
-                    ->label("فئة المتجر")
-                    ->sortable()
+
+                Tables\Columns\TextColumn::make("store_category")
+                    ->label("تصنيفات المتجر")
                     ->searchable()
+                    ->sortable(),
+
+
+                Tables\Columns\BadgeColumn::make('status')
+                    ->label('الحالة')
+                    ->enum([
+                        'pending' => 'لم يتم التواصل',
+                        'approved' => 'مهتم',
+                        'rejected' => 'غير مهتم',
+                    ])
+                    ->colors([
+
+                        'pending' => 'bg-yellow-400 text-yellow-800',
+                        'approved' => 'success',
+                        'rejected' => 'danger',
+                    ])
+                    ->icons([
+                        'pending' => 'heroicon-o-clock',
+                        'approved'  => 'heroicon-o-check-circle',
+                        'rejected' => 'heroicon-o-x-circle',
+                    ]),
+
+
+
+                Tables\Columns\TextColumn::make('created_date')
+                    ->label('تاريخ الإنشاء')
+                    ->searchable()
+                    ->sortable()
+                    ->formatStateUsing(fn($state, $record) => $record->created_at->format('Y-m-d')),
+
+                Tables\Columns\TextColumn::make('created_time')
+                    ->label('وقت الإنشاء')
+                    ->searchable()
+                    ->sortable()
+                    ->formatStateUsing(fn($state, $record) => $record->created_at->format('h:i A')),
+
+
+
+                Tables\Columns\TextColumn::make('created_diff')
+                    ->label('منذ الإنشاء')
+                    ->searchable()
+                    ->sortable()
+                    ->formatStateUsing(fn($state, $record) => $record->created_at->diffForHumans()),
+
+
+
+                Tables\Columns\TextColumn::make('whatsapp')
+                    ->label('واتساب')
+                    ->getStateUsing(function ($record) {
+                        $client_phone = preg_replace('/[^0-9]/', '', $record->client_phone);
+                        $url = 'https://wa.me/' . $client_phone . '?text=' . urlencode('السلام عليكم، ممكن أساعدك؟');
+
+                        return <<<HTML
+            <a href="{$url}" target="_blank"
+                style="
+                    background-color:rgb(45, 177, 93);
+                    color: white;
+                    padding: 6px 12px;
+                    border-radius: 6px;
+                    font-size: 14px;
+                    text-decoration: none;
+                    display: inline-block;
+                ">
+                زيارة الواتساب
+            </a>
+        HTML;
+                    })
+                    ->html(),
 
 
             ])
             ->filters([
-                //
+                Filter::make('store_category')
+                    ->form([
+                        Select::make('store_category')
+                            ->label('التصنيف')
+                            ->options([
+                                'إلكترونيات' => 'إلكترونيات',
+                                'موضة وأزياء' => 'موضة وأزياء',
+                                'تجميل وعناية' => 'تجميل وعناية',
+                                'بقالة ومواد غذائية' => 'بقالة ومواد غذائية',
+                                'furniture' => 'أثاث وديكور',
+                                'كتب ومجلات' => 'كتب ومجلات',
+                                'ألعاب وهوايات' => 'ألعاب وهوايات',
+                                'رياضة ولياقة' => 'رياضة ولياقة',
+                                'سيارات واكسسوارات' => 'سيارات واكسسوارات',
+                                'معدات وأدوات' => 'معدات وأدوات',
+                                'مستلزمات الحيوانات' => 'مستلزمات الحيوانات',
+                                'مكتبية وقرطاسية' => 'مكتبية وقرطاسية',
+                                'مجوهرات واكسسوارات' => 'مجوهرات واكسسوارات',
+                                'هواتف واكسسوارات' => 'هواتف واكسسوارات',
+                                'منتجات يدوية' => 'منتجات يدوية',
+                                'أخري' => 'أخري'
+                            ])
+
+                    ])
+
+
+
+                    ->query(function (Builder $query, array $data) {
+                        if (isset($data['store_category'])) {
+                            return $query->where('store_category', '=', $data['store_category']);
+                        }
+                    }),
+                Filter::make('status')
+                    ->form([
+                        Select::make('status')
+                            ->label('حالة العميل')
+                            ->options([
+
+                                'pending' => 'لم يتم التواصل',
+                                'approved' => 'مهتم',
+                                'rejected' => 'غير مهتم',
+
+                            ])
+
+                    ])
+
+
+
+                    ->query(function (Builder $query, array $data) {
+                        if (isset($data['status'])) {
+                            return $query->where('status', '=', $data['status']);
+                        }
+                    }),
+                Filter::make('created_at')
+                    ->label('تاريخ الإنشاء')
+                    ->form([
+                        DatePicker::make('created_at')
+                            ->label('تاريخ')
+
+                    ])
+                    ->query(function (Builder $query, array $data) {
+                        if (isset($data['created_at'])) {
+                            return $query->whereDate('created_at', '=', $data['created_at']);
+                        }
+                    }),
             ])
 
-        ;
+
+            ->bulkActions([
+                ExportBulkAction::make()
+            ]);
     }
 
     public static function getRelations(): array
@@ -107,6 +297,8 @@ class ClientResource extends Resource
             'index' => Pages\ListClients::route('/'),
             'create' => Pages\CreateClient::route('/create'),
             'edit' => Pages\EditClient::route('/{record}/edit'),
+            // 'view' => Pages\ViewClient::route('/{record}'), // 👈 هذا السطر الجديد
+
         ];
     }
 }

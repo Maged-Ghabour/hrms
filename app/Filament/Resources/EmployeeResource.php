@@ -149,18 +149,18 @@ class EmployeeResource extends Resource
                 Tables\Columns\TextColumn::make('created_at')->label('تاريخ التسجيل')
                     ->dateTime(),
             ])
-            ->pushBulkActions([
-                ExportAction::make('export')
-                    ->icon('heroicon-o-document-download')
-                    ->label('Export Data') // Button label
-                    ->withWriterType(Excel::CSV) // Export type: CSV, XLS, XLSX
-                    ->except('updated_at') // Exclude fields
-                    ->withFilename('employee list') // Set a filename
-                    ->withHeadings() // Get headings from table or form
-                    ->askForFilename(date('Y-m-d') . '-export') // Let the user choose a filename. You may pass a default.
-                    ->askForWriterType(Excel::XLS)  // Let the user choose an export type. You may pass a default.
-                    ->allFields() // Export all fields on model,
-            ])
+            // ->pushBulkActions([
+            //     ExportAction::make('export')
+            //         ->icon('heroicon-o-document-download')
+            //         ->label('Export Data') // Button label
+            //         ->withWriterType(Excel::CSV) // Export type: CSV, XLS, XLSX
+            //         ->except('updated_at') // Exclude fields
+            //         ->withFilename('employee list') // Set a filename
+            //         ->withHeadings() // Get headings from table or form
+            //         ->askForFilename(date('Y-m-d') . '-export') // Let the user choose a filename. You may pass a default.
+            //         ->askForWriterType(Excel::XLS)  // Let the user choose an export type. You may pass a default.
+            //         ->allFields() // Export all fields on model,
+            // ])
             ->filters([
                 Tables\Filters\Filter::make('created_at')
                     ->form([
